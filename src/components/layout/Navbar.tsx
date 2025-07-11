@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
-import Switch from "react-switch";
+import { Link } from 'react-router-dom';
 
 interface MenuLinkProps {
   icon: React.ReactNode;
@@ -57,38 +57,38 @@ const DropdownMenuLink = ({ icon, title, description, onClick }: MenuLinkProps) 
 );
 
 const Navbar: React.FC = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  // const [darkMode, setDarkMode] = useState(false);
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    if (!darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  };
+  // const toggleDarkMode = () => {
+  //   setDarkMode(!darkMode);
+  //   if (!darkMode) {
+  //     document.documentElement.classList.add('dark');
+  //   } else {
+  //     document.documentElement.classList.remove('dark');
+  //   }
+  // };
 
   return (
     <nav className="bg-[#FFEFEC]">
       <div className="container mx-auto h-24 flex items-center justify-between px-4">
-        <div className="flex items-center gap-8"> {/* New container for left side */}
+        <div className="flex items-center gap-8"> 
           <Logo />
 
-          <div className="hidden md:flex items-center gap-8"> {/* Adjusted gap */}
-            <Button variant="ghost" className="normal-case font-normal text-base ">Home Page</Button> {/* Font weight 400 */}
-            <Button variant="ghost" className="normal-case font-normal text-base ">Courses Offered</Button> {/* Font weight 400 */}
-            <Button variant="ghost" className="normal-case font-normal text-base ">About Us</Button> {/* Font weight 400 */}
+          <div className="hidden md:flex items-center gap-8">
+            <Link to="/" className="normal-case font-normal text-base text-black">Home</Link>
+            <Link to="/courses" className="normal-case font-normal text-base text-black">Courses Offered</Link>
+            <Link to="/about" className="normal-case font-normal text-base text-black">About Us</Link>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="normal-case font-normal text-base "> {/* Font weight 400 */}
+                <Button variant="ghost" className="normal-case font-normal text-base "> 
                   More Links <ChevronDown className="ml-1 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-auto p-0 mt-4 shadow-lg border border-black/15 rounded-xl overflow-hidden" align="center">
-                <div className="flex bg-[#FFEFEC]"> {/* Changed background to match navbar */}
-                  <div className="flex px-8 py-6 gap-6"> {/* Adjusted padding and gap */}
-                    <div className="flex flex-col gap-y-4"> {/* Removed fixed width */}
+                <div className="flex bg-[#FFEFEC]"> 
+                  <div className="flex px-8 py-6 gap-6"> 
+                    <div className="flex flex-col gap-y-4"> 
                       <p className="font-semibold text-sm text-black mb-2 px-2">Explore Learning</p>
                       <DropdownMenuLink icon={<Icons.OnlineCourses />} title="Online Courses" description="Find courses tailored to your needs." />
                       <DropdownMenuLink icon={<Icons.LearningResources />} title="Learning Resources" description="Discover tools for effective learning." />
@@ -96,15 +96,15 @@ const Navbar: React.FC = () => {
                       <DropdownMenuLink icon={<Icons.BlogPosts />} title="Blog Posts" description="Read tips and insights on education." />
                     </div>
   
-                    <div className="flex flex-col gap-y-4"> {/* Removed fixed width */}
+                    <div className="flex flex-col gap-y-4"> 
                       <p className="font-semibold text-sm text-black mb-2 px-2">More Options</p>
                       <DropdownMenuLink icon={<Icons.UserDashboard />} title="User Dashboard" description="Manage your courses and preferences." />
                       <DropdownMenuLink icon={<Icons.SupportCenter />} title="Support Center" description="FAQs and help resources available." />
                       <DropdownMenuLink icon={<Icons.FeedbackForm />} title="Feedback Form" description="Share your thoughts and suggestions." />
                       <DropdownMenuLink icon={<Icons.SpecialOffers />} title="Special Offers" description="Check out our latest promotions." />
                     </div>
-  
-                    <div className="flex flex-col gap-y-4"> {/* Removed fixed width */}
+
+                    <div className="flex flex-col gap-y-4">
                       <p className="font-semibold text-sm text-black mb-2 px-2">Additional Links</p>
                       <DropdownMenuLink icon={<Icons.PrivacyPolicy />} title="Privacy Policy" description="Learn how we protect your data." />
                       <DropdownMenuLink icon={<Icons.TermsOfUse />} title="Terms of Use" description="Understand our service terms and conditions." />
@@ -113,13 +113,13 @@ const Navbar: React.FC = () => {
                     </div>
                   </div>
   
-                  <div className="flex flex-col gap-y-4 px-8 py-6 bg-[#FFDFDA] w-64"> {/* Adjusted padding */}
+                  <div className="flex flex-col gap-y-4 px-8 py-6 bg-[#FFDFDA] w-64"> 
                     <p className="font-semibold text-sm text-black mb-2">Quick Links</p>
-                    <a href="#" className="text-sm text-black py-2 rounded hover:underline">Help Center</a> {/* Adjusted padding */}
-                    <a href="#" className="text-sm text-black py-2 rounded hover:underline">Contact Support</a> {/* Adjusted padding */}
-                    <a href="#" className="text-sm text-black py-2 rounded hover:underline">User Guide</a> {/* Adjusted padding */}
-                    <a href="#" className="text-sm text-black py-2 rounded hover:underline">Site Map</a> {/* Adjusted padding */}
-                    <a href="#" className="text-sm text-black py-2 rounded hover:underline">Learning Hub</a> {/* Adjusted padding */}
+                    <a href="#" className="text-sm text-black py-2 rounded hover:underline">Help Center</a> 
+                    <a href="#" className="text-sm text-black py-2 rounded hover:underline">Contact Support</a> 
+                    <a href="#" className="text-sm text-black py-2 rounded hover:underline">User Guide</a> 
+                    <a href="#" className="text-sm text-black py-2 rounded hover:underline">Site Map</a> 
+                    <a href="#" className="text-sm text-black py-2 rounded hover:underline">Learning Hub</a> 
                   </div>
                 </div>
               </DropdownMenuContent>
@@ -128,7 +128,7 @@ const Navbar: React.FC = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-4">
-          <Switch
+          {/* <Switch
             onChange={toggleDarkMode}
             checked={darkMode}
             onColor="#86d3ff"
@@ -140,7 +140,7 @@ const Navbar: React.FC = () => {
             activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
             height={20}
             width={48}
-          />
+          /> */}
           <Button variant="outline" className="border-black/20 hover:bg-black/5 text-black normal-case font-medium text-base px-6 py-2.5 h-auto rounded-lg  dark:border-white/20"> {/* Font weight 500 */}
             Join
           </Button>
