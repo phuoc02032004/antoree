@@ -1,35 +1,24 @@
-import React, { useState, type CSSProperties } from "react";
-import { ClipLoader } from "react-spinners";
+import React, { type CSSProperties } from "react";
+import { PuffLoader } from "react-spinners";
 
 const override: CSSProperties = {
   display: "block",
   margin: "0 auto",
-  borderColor: "red",
 };
 
 const Loading: React.FC = () => {
-const [loading, setLoading] = useState(true);
-const [color, setColor] = useState("#ffffff");
-
   return (
-    <div className="sweet-loading">
-      <button onClick={() => setLoading(!loading)}>Toggle Loader</button>
-      <input
-        value={color}
-        onChange={(input) => setColor(input.target.value)}
-        placeholder="Color of the loader"
-      />
-
-      <ClipLoader
-        color={color}
-        loading={loading}
+    <div className="sweet-loading text-center py-12">
+      <PuffLoader
+        color={"#4A90E2"}
+        loading={true}
         cssOverride={override}
-        size={150}
+        size={100}
         aria-label="Loading Spinner"
         data-testid="loader"
       />
     </div>
   );
-}
+};
 
 export default Loading;

@@ -1,69 +1,97 @@
-# React + TypeScript + Vite
+## Tính năng chính
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+*   **Khám phá khóa học:** Duyệt qua các khóa học theo danh mục, tìm kiếm theo từ khóa và lọc theo giá (truy cập vào `http://localhost:5173/courses`).
+*   **Gợi ý khóa học:** Nhận các gợi ý khóa học phù hợp dựa trên sở thích hoặc lịch sử xem.
+*   **Quản lý danh mục:** Xem và lọc các khóa học theo danh mục.
+*   **Danh sách yêu thích:** Thêm và quản lý các khóa học yêu thích (truy cập: `http://localhost:5173/favorites`).
+*   **Lịch sử xem:** Theo dõi các khóa học đã xem gần đây (truy cập: `http://localhost:5173/courses`).
+*   **Phân trang:** Dễ dàng điều hướng qua các trang khóa học.
+*   **Giao diện người dùng thân thiện:** Thiết kế đáp ứng, dễ sử dụng trên nhiều thiết bị.
 
-Currently, two official plugins are available:
+## Công nghệ sử dụng
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+*   **Frontend:**
+    *   React
+    *   TypeScript
+    *   Vite
+    *   Tailwind CSS
+    *   Shadcn/ui (cho các thành phần UI)
+*   **API Integration:** Axios
 
-## Expanding the ESLint configuration
+## Cài đặt
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Để chạy dự án này cục bộ, hãy làm theo các bước sau:
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1.  **Clone repository:**
+    ```bash
+    git clone [URL_REPOSITORY_CỦA_BẠN]
+    cd antoree
+    ```
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+2.  **Cài đặt các dependencies:**
+    ```bash
+    npm install
+    # hoặc
+    yarn install
+    ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+3.  **Cấu hình biến môi trường:**
+    Tạo một file `.env` ở thư mục gốc của dự án và thêm các biến môi trường cần thiết. Ví dụ:
+    ```
+    VITE_API_BASE_URL=http://localhost:3000/api
+    ```
+    (Thay đổi URL API của bạn nếu cần)
+
+## Cách chạy ứng dụng
+
+Để khởi động ứng dụng ở chế độ phát triển:
+
+```bash
+npm run dev
+# hoặc
+yarn dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Ứng dụng sẽ chạy trên `http://localhost:5173` (hoặc một cổng khác nếu 5173 đã được sử dụng).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Cấu trúc thư mục chính
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+antoree/
+├── public/
+├── src/
+│   ├── api/             # Các dịch vụ gọi API
+│   ├── assets/          # Hình ảnh, icon, v.v.
+│   ├── components/      # Các thành phần UI có thể tái sử dụng
+│   │   ├── Course/
+│   │   ├── Home/
+│   │   ├── layout/
+│   │   ├── Loading/
+│   │   └── ui/          # Các thành phần Shadcn/ui
+│   ├── data/            # Dữ liệu giả định hoặc dữ liệu tĩnh
+│   ├── hooks/           # Các React Hooks tùy chỉnh
+│   ├── lib/             # Các hàm tiện ích chung
+│   ├── pages/           # Các trang chính của ứng dụng
+│   │   └── Auth/
+│   ├── routes/          # Định tuyến ứng dụng
+│   └── types/           # Định nghĩa kiểu TypeScript
+├── .gitignore           # Các file và thư mục bị bỏ qua bởi Git
+├── components.json      # Cấu hình Shadcn/ui
+├── eslint.config.js     # Cấu hình ESLint
+├── index.html           # File HTML chính
+├── package.json         # Thông tin dự án và dependencies
+├── package-lock.json    # Khóa dependencies
+├── README.md            # File README của dự án
+├── tailwind.config.js   # Cấu hình Tailwind CSS
+├── tsconfig.json        # Cấu hình TypeScript
+├── tsconfig.app.json    # Cấu hình TypeScript cho ứng dụng
+├── tsconfig.node.json   # Cấu hình TypeScript cho Node.js
+├── vercel.json          # Cấu hình Vercel (nếu có)
+└── vite.config.ts       # Cấu hình Vite
+```
+
+## Đóng góp
+
+Nếu bạn muốn đóng góp vào dự án, vui lòng fork repository và tạo một pull request.
+
+

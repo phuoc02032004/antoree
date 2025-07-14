@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
@@ -77,6 +77,8 @@ const Navbar: React.FC = () => {
           <div className="hidden md:flex items-center gap-8">
             <Link to="/" className="normal-case font-normal text-base text-black">Home</Link>
             <Link to="/courses" className="normal-case font-normal text-base text-black">Courses Offered</Link>
+            <Link to="/favorites" className="normal-case font-normal text-base text-black">Favorites</Link>
+            <Link to="/viewed-history" className="normal-case font-normal text-base text-black">History</Link>
             <Link to="/about" className="normal-case font-normal text-base text-black">About Us</Link>
 
             <DropdownMenu>

@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { Heart } from 'lucide-react';
 import chevronRight from '@/assets/icons/chevron-right-black.svg';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
 import { type Course } from '@/types/Course';
 import { type Category } from '@/types/Category';
 import CourseDetailModal from '@/components/Course/CourseDetailModal';
+import { useFavorites } from '@/hooks/useFavorites';
+import CourseListLoading from '@/components/Course/CourseListLoading';
 
 interface CourseListProps {
   courses: Course[];
@@ -13,6 +16,7 @@ interface CourseListProps {
   onPageChange: (pageNumber: number) => void;
   categories: Category[];
   formatPrice: (price: number) => string;
+  isLoading?: boolean;
 }
 
 const CourseList: React.FC<CourseListProps> = ({
@@ -22,9 +26,11 @@ const CourseList: React.FC<CourseListProps> = ({
   onPageChange,
   categories,
   formatPrice,
+  isLoading = false,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   const handleReadMoreClick = (course: Course) => {
     setSelectedCourse(course);
@@ -36,6 +42,10 @@ const CourseList: React.FC<CourseListProps> = ({
     setSelectedCourse(null);
   };
 
+  if (isLoading) {
+    return <CourseListLoading />;
+  }
+
   return (
     <>
       <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
@@ -43,40 +53,54 @@ const CourseList: React.FC<CourseListProps> = ({
           <Card
             key={course.id}
             className="group flex flex-col overflow-hidden rounded-2xl border-transparent bg-white shadow-sm
-              transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-2xl cursor-pointer" 
-            onClick={() => handleReadMoreClick(course)}
+              transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-2xl cursor-pointer"
           >
-            <img
-              src={course.thumbnailUrl}
-              alt={course.title}
-              className="h-56 w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
-            />
-            <CardContent className="flex flex-grow flex-col p-6">
-              <div className="mb-4 flex items-center gap-4">
-                <span className="rounded-full bg-[#FFEAE3] px-3 py-1 text-xs font-bold text-[#E5593F]">
-                  {categories.find(cat => cat.id === course.category)?.name}
-                </span>
-              </div>
-              <CardTitle className="font-sora text-xl font-bold text-gray-800 transition-colors duration-300 group-hover:text-[#E5593F]">
-                {course.title}
-              </CardTitle>
-              <p className="font-inter mt-3 flex-grow text-base text-gray-500">
-                {course.description}
-              </p>
-              <p className="font-sora mt-2 text-lg font-bold text-gray-900">
-                {formatPrice(course.price)}
-              </p>
-            </CardContent>
-            <CardFooter className="p-6 pt-2">
-              <div className="flex items-center text-base font-semibold text-[#FF6347] transition-colors duration-300 group-hover:text-[#E5593F]">
-                Read more
-                <img
-                  src={chevronRight}
-                  alt="arrow"
-                  className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                />
-              </div>
-            </CardFooter>
+            <div className="relative">
+              <img
+                src={course.thumbnailUrl}
+                alt={course.title}
+                className="h-56 w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+              />
+              <Button
+                variant="outline"
+                size="icon"
+                className="absolute top-3 right-3 bg-white/80 rounded-full text-red-500 hover:bg-white hover:text-red-600"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleFavorite(course.id);
+                }}
+              >
+                <Heart className={`w-5 h-5 ${isFavorite(course.id) ? 'fill-current text-red-600' : 'text-red-500'}`} />
+              </Button>
+            </div>
+            <div onClick={() => handleReadMoreClick(course)} className="flex flex-col flex-grow">
+              <CardContent className="flex flex-grow flex-col p-6">
+                <div className="mb-4 flex items-center gap-4">
+                  <span className="rounded-full bg-[#FFEAE3] px-3 py-1 text-xs font-bold text-[#E5593F]">
+                    {categories.find(cat => cat.id === course.category)?.name}
+                  </span>
+                </div>
+                <CardTitle className="font-sora text-xl font-bold text-gray-800 transition-colors duration-300 group-hover:text-[#E5593F]">
+                  {course.title}
+                </CardTitle>
+                <p className="font-inter mt-3 flex-grow text-base text-gray-500">
+                  {course.description}
+                </p>
+                <p className="font-sora mt-2 text-lg font-bold text-gray-900">
+                  {formatPrice(course.price)}
+                </p>
+              </CardContent>
+              <CardFooter className="p-6 pt-2">
+                <div className="flex items-center text-base font-semibold text-[#FF6347] transition-colors duration-300 group-hover:text-[#E5593F]">
+                  Read more
+                  <img
+                    src={chevronRight}
+                    alt="arrow"
+                    className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                  />
+                </div>
+              </CardFooter>
+            </div>
           </Card>
         ))}
       </div>

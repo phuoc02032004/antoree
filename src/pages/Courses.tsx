@@ -1,10 +1,13 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
 import CourseFilter from '@/components/Course/CourseFilter';
 import CourseList from '@/components/Course/CourseList';
 import { getCourses } from '@/api/course';
 import { getCategories } from '@/api/category';
 import { type Course } from '@/types/Course';
 import { type Category } from '@/types/Category';
+import { getSuggestion } from '@/api/suggestion';
+import Loading from '@/components/Loading/Loading';
 
 const ITEMS_PER_PAGE = 6;
 
@@ -16,29 +19,49 @@ const Courses: React.FC = () => {
   const [sortOrder, setSortOrder] = useState('default'); 
   const [courses, setCourses] = useState<Course[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [suggestion, setSuggestion] = useState<Course[]>([]);
+  const [suggestionError, setSuggestionError] = useState<string | null>(null);
+  const [isSuggesting, setIsSuggesting] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [initialDataError, setInitialDataError] = useState<string | null>(null);
 
-  const fetchCourses = async () => {
+
+  const handleSuggestClick = async () => {
+    setIsSuggesting(true);
+    setSuggestion([]);
+    setSuggestionError(null);
     try {
-      const response = await getCourses();
-      setCourses(response);
+      const response = await getSuggestion(1);
+      setSuggestion(response);
     } catch (error) {
-      console.error('Failed to fetch courses:', error);
+      console.error('Error fetching suggestions:', error);
+      setSuggestionError('Can not get hints at this time');
+    } finally {
+      setIsSuggesting(false);
     }
-  }
+  };
 
-  const fetchCategories = async () => {
-    try {
-      const response = await getCategories();
-      setCategories(response);
-    } catch (error) {
-      console.error('Failed to fetch categories:', error);
-    }
-  }
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      setIsLoading(true);
+      try {
+        const [coursesData, categoriesData] = await Promise.all([
+          getCourses(),
+          getCategories(),
+        ]);
+        setCourses(coursesData);
+        setCategories(categoriesData);
+        setInitialDataError(null);
+      } catch (error) {
+        console.error('Failed to fetch initial data:', error);
+        setInitialDataError('Failed to load course data. Please try again later.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  useEffect(()=> {
-    fetchCourses();
-    fetchCategories();
-  }, [])
+    fetchInitialData();
+  }, []);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -116,6 +139,37 @@ const Courses: React.FC = () => {
           </p>
         </div>
 
+        <div className="mb-8 text-center">
+          <Button
+            onClick={handleSuggestClick}
+            disabled={isSuggesting}
+            className="bg-[#E5593F] text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-all duration-300 disabled:bg-gray-400"
+          >
+            {isSuggesting ? 'Đang tìm gợi ý...' : 'Gợi ý sản phẩm phù hợp'}
+          </Button>
+        </div>
+
+        {suggestionError && (
+          <p className="text-center text-red-500 mb-4">{suggestionError}</p>
+        )}
+        {isSuggesting && <Loading />}
+        {!isSuggesting && suggestion.length > 0 && (
+          <div className="mb-12">
+            <h2 className="font-sora text-3xl font-bold tracking-tight text-gray-900 md:text-4xl mb-8 text-center">
+              Dành cho bạn
+            </h2>
+            <CourseList
+              courses={suggestion}
+              currentPage={1}
+              totalPages={1}
+              onPageChange={() => {}}
+              categories={categories}
+              formatPrice={formatPrice}
+              isLoading={false}
+            />
+          </div>
+        )}
+
         <div className="mb-8">
           <CourseFilter
             searchTerm={searchTerm}
@@ -137,7 +191,13 @@ const Courses: React.FC = () => {
           onPageChange={handlePageChange}
           categories={categories}
           formatPrice={formatPrice}
+          isLoading={isLoading}
         />
+        {initialDataError && (
+          <div className="text-center text-red-500 mt-8">
+            <p>{initialDataError}</p>
+          </div>
+        )}
       </div>
     </section>
   );

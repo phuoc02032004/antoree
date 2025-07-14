@@ -1,8 +1,15 @@
 import {categories} from "../data/categories";
 import { type Category } from "../types/Category";
 
-const getCategories = (): Category[] => {
-  return categories;
+const getCategories = async (): Promise<Category[]> => {
+  try {
+    const response = await categories
+    return response
+  } catch (err) {
+    console.error('Error get category ...', err)
+    throw err
+  }
+  
 };
 
 const getCategoryById = (id: string): Category | undefined => {

@@ -61,4 +61,6 @@ export interface Course {
   updatedAt: string;
   reviewsCount: number;
   whatYouWillLearn: string[];
+  isFavorite?: boolean;
+  progress?: number;
 }
