@@ -6,6 +6,7 @@ import Courses from "@/pages/Courses";
 import Favorites from "@/pages/Favorites";
 import ViewedHistory from "@/pages/ViewedHistory";
 import Cart from "@/pages/Cart";
+import ThankYou from "@/pages/ThankYou";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const AppRoutes: React.FC = () => {
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/viewed-history" element={<ViewedHistory />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="thank-you" element={<ThankYou/>}/>
       </Route>
     </Routes>
   );  

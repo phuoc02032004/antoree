@@ -1,7 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import type { RootState } from '@/store';
-// import { removeFromCart, updateQuantity } from '@/store/cartSlice'; 
+import { clearCart } from '@/store/cartSlice';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import CartHeader from '@/components/Cart/CartHeader';
 import EmptyCartMessage from '@/components/Cart/EmptyCartMessage';
@@ -10,6 +11,8 @@ import OrderSummaryCard from '@/components/Cart/OrderSummaryCard';
 
 const Cart: React.FC = () => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Commented out quantity-related functions as per user feedback
   // const handleRemoveFromCart = (courseId: string) => {
@@ -33,7 +36,12 @@ const Cart: React.FC = () => {
   // };
 
   const calculateTotalPrice = () => {
-    return cartItems.reduce((total, item) => total + item.course.price, 0); 
+    return cartItems.reduce((total, item) => total + item.course.price, 0);
+  };
+
+  const handleCheckout = () => {
+    dispatch(clearCart());
+    navigate('/thank-you');
   };
 
   const formatPrice = (price: number) => {
@@ -72,6 +80,7 @@ const Cart: React.FC = () => {
                 cartItemsCount={cartItems.length}
                 totalPrice={calculateTotalPrice()}
                 formatPrice={formatPrice}
+                onCheckOut={handleCheckout}
               />
             </div>
           </div>

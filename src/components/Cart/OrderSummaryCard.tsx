@@ -8,12 +8,14 @@ interface OrderSummaryCardProps {
   cartItemsCount: number;
   totalPrice: number;
   formatPrice: (price: number) => string;
+  onCheckOut: ()=>void
 }
 
 const OrderSummaryCard: React.FC<OrderSummaryCardProps> = ({
   cartItemsCount,
   totalPrice,
   formatPrice,
+  onCheckOut,
 }) => {
   return (
     <Card className="shadow-lg border-0 sticky top-8">
@@ -49,7 +51,7 @@ const OrderSummaryCard: React.FC<OrderSummaryCardProps> = ({
         </div>
 
         <div className="space-y-3 mt-6">
-          <Button className="w-full bg-[#E5593F] hover:bg-[#D44A30] text-white py-3 text-lg font-semibold shadow-lg">
+          <Button onClick={onCheckOut} className="w-full bg-[#E5593F] hover:bg-[#D44A30] text-white py-3 text-lg font-semibold shadow-lg">
             <CreditCard className="h-5 w-5 mr-2" />
             Checkout Now
           </Button>
