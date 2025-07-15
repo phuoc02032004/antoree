@@ -4,7 +4,7 @@
 *   **Gợi ý khóa học:** Nhận các gợi ý khóa học phù hợp dựa trên sở thích hoặc lịch sử xem.
 *   **Quản lý danh mục:** Xem và lọc các khóa học theo danh mục.
 *   **Danh sách yêu thích:** Thêm và quản lý các khóa học yêu thích (truy cập: `http://localhost:5173/favorites`).
-*   **Lịch sử xem:** Theo dõi các khóa học đã xem gần đây (truy cập: `http://localhost:5173/courses`).
+*   **Lịch sử xem:** Theo dõi các khóa học đã xem gần đây (truy cập: `http://localhost:5173/viewed-history`).
 *   **Giỏ hàng:** Thêm khóa học vào giỏ hàng và quản lý các mục trong giỏ hàng (truy cập: `http://localhost:5173/cart`).
 *   **Phân trang:** Dễ dàng điều hướng qua các trang khóa học.
 *   **Giao diện người dùng thân thiện:** Thiết kế đáp ứng, dễ sử dụng trên nhiều thiết bị.
