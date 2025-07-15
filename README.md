@@ -26,7 +26,7 @@
 
 1.  **Clone repository:**
     ```bash
-    git clone [URL_REPOSITORY_CỦA_BẠN]
+    git clone https://github.com/phuoc02032004/antoree
     cd antoree
     ```
 
@@ -37,8 +37,8 @@
     yarn install
     ```
 
-3.  **Cấu hình biến môi trường:**
-    Tạo một file `.env` ở thư mục gốc của dự án và thêm các biến môi trường cần thiết (bước này hiện tại chưa cần vì đã mockdata). Ví dụ:
+3.  **Cấu hình biến môi trường:** (bước này hiện tại chưa cần vì đã dùng mockdata)
+    Tạo một file `.env` ở thư mục gốc của dự án và thêm các biến môi trường cần thiết. Ví dụ:
     ```
     VITE_API_BASE_URL=http://localhost:3000/api
     ```
