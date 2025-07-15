@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '../ui/button';
-import heroImage from '../../assets/images/hero-image.png';
+import heroImage from '/images/hero-image.png';
 import { Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 

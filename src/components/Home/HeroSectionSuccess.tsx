@@ -3,12 +3,12 @@ import { Button } from '@/components/ui/button';
 import { Sparkles, BookOpen, TrendingUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-import heroImage1 from '@/assets/images/hero-image-1.png';
-import heroImage2 from '@/assets/images/hero-image-2.png';
-import heroImage3 from '@/assets/images/hero-image-3.png';
-import heroImage4 from '@/assets/images/hero-image-4.png';
-import heroImage5 from '@/assets/images/hero-image-5.png';
-import heroImage6 from '@/assets/images/hero-image-6.png';
+import heroImage1 from '/images/hero-image-1.png';
+import heroImage2 from '/images/hero-image-2.png';
+import heroImage3 from '/images/hero-image-3.png';
+import heroImage4 from '/images/hero-image-4.png';
+import heroImage5 from '/images/hero-image-5.png';
+import heroImage6 from '/images/hero-image-6.png';
 
 const HeroSectionSuccess: React.FC = () => {
   const navigate = useNavigate();

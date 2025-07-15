@@ -11,19 +11,19 @@ const ArrowIcon: React.FC<{ className?: string }> = ({ className }) => (
 
 const offeringsData = [
   {
-    imgSrc: "/src/assets/images/offering-1.png",
+    imgSrc: "/images/offering-1.png",
     altText: "Trending Categories",
     title: "Trending Categories",
     description: "Discover the latest in educational trends and topics.",
   },
   {
-    imgSrc: "/src/assets/images/offering-2.png",
+    imgSrc: "/images/offering-2.png",
     altText: "How Our Platform Works",
     title: "How It Works",
     description: "Our simple three-step process makes learning easy.",
   },
   {
-    imgSrc: "/src/assets/images/offering-3.png",
+    imgSrc: "/images/offering-3.png",
     altText: "Start Your Learning Journey",
     title: "Start Your Journey",
     description: "Sign up today to unlock your full potential.",

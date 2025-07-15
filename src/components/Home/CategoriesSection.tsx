@@ -22,7 +22,7 @@ const ArrowIcon: React.FC<{ className?: string }> = ({ className }) => (
 
 const categoriesData = [
   {
-    imgSrc: "/src/assets/images/category-1.png",
+    imgSrc: "/images/category-1.png",
     altText: "Trending Topics",
     title: "Trending Topics to Enhance Your Learning",
     description: "Stay ahead in your education with our curated trending categories.",
@@ -30,7 +30,7 @@ const categoriesData = [
     href: "#",
   },
   {
-    imgSrc: "/src/assets/images/category-2.png",
+    imgSrc: "/images/category-2.png",
     altText: "Science and Technology",
     title: "Best Courses in Science & Technology",
     description: "Dive into our top categories to fuel your curiosity and growth.",
@@ -38,7 +38,7 @@ const categoriesData = [
     href: "#",
   },
   {
-    imgSrc: "/src/assets/images/category-3.png",
+    imgSrc: "/images/category-3.png",
     altText: "Arts and Humanities",
     title: "Courses in Arts and Humanities",
     description: "Explore creative subjects that inspire and challenge your thinking.",
