@@ -25,13 +25,15 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ className = "" }) => {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   const handleLogin = () => {
-    //Open page Sign in and request
+    //Open page Sign in and request here
     localStorage.setItem('token', 'your_placeholder_token_here');
     window.location.reload();
   }
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('favoriteCourses');
+    localStorage.removeItem('viewedCourses');
     window.location.reload();
   }
 
