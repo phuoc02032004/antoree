@@ -7,7 +7,7 @@ const testimonialsData = [
     quote: "The personalized recommendations made finding courses so easy!",
     name: "Jane Doe",
     title: "Student, University",
-    avatar: "/src/assets/images/avatar-1.png",
+    avatar: "/images/avatar-1.png",
     rating: 5,
   },
   {
@@ -15,7 +15,7 @@ const testimonialsData = [
     quote: "I found exactly what I needed for my classes. A fantastic tool for educators!",
     name: "John Smith",
     title: "Teacher, High School",
-    avatar: "/src/assets/images/avatar-2.png",
+    avatar: "/images/avatar-2.png",
     rating: 5,
   },
   {
@@ -23,7 +23,7 @@ const testimonialsData = [
     quote: "As a lifelong learner, this platform is user-friendly, efficient, and truly inspiring.",
     name: "Emily Johnson",
     title: "Lifelong Learner",
-    avatar: "/src/assets/images/avatar-3.png",
+    avatar: "/images/avatar-3.png",
     rating: 5,
   },
 ];
