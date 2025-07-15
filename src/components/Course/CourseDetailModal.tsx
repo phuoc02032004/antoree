@@ -52,7 +52,7 @@ const CourseDetailModal: React.FC<CourseDetailModalProps> = ({
   const handleAddToCart = useCallback(() => {
     if (course) {
       dispatch(addToCart(course));
-      toast('Add items');
+      toast('Added to cart!');
     }
   }, [dispatch, course]);
  
@@ -146,7 +146,7 @@ const CourseDetailModal: React.FC<CourseDetailModalProps> = ({
             <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
               <h3 className="text-sm font-semibold text-white/90 flex items-center mb-3">
                 <User className="w-4 h-4 mr-2" />
-                Giảng viên
+                Instructor
               </h3>
               
               <div className="flex items-center space-x-3">
@@ -194,24 +194,24 @@ const CourseDetailModal: React.FC<CourseDetailModalProps> = ({
               <div className="text-center p-4 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl border border-orange-200">
                 <Clock className="w-6 h-6 mx-auto text-orange-600 mb-2" />
                 <p className="text-sm font-semibold text-gray-800">12h</p>
-                <p className="text-xs text-gray-600">Thời lượng</p>
+                <p className="text-xs text-gray-600">Duration</p>
               </div>
               <div className="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-xl border border-green-200">
                 <Users className="w-6 h-6 mx-auto text-green-600 mb-2" />
                 <p className="text-sm font-semibold text-gray-800">1,234</p>
-                <p className="text-xs text-gray-600">Học viên</p>
+                <p className="text-xs text-gray-600">Students</p>
               </div>
               <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl border border-purple-200">
                 <Award className="w-6 h-6 mx-auto text-purple-600 mb-2" />
-                <p className="text-sm font-semibold text-gray-800">Có</p>
-                <p className="text-xs text-gray-600">Chứng chỉ</p>
+                <p className="text-sm font-semibold text-gray-800">Yes</p>
+                <p className="text-xs text-gray-600">Certificate</p>
               </div>
             </div>
             
             <div className="mb-6">
               <h3 className="text-lg lg:text-xl font-bold mb-4 flex items-center text-gray-800">
                 <CheckCircle2 className="w-6 h-6 mr-3 text-orange-600" />
-                Bạn sẽ học được gì?
+                What you will learn?
               </h3>
               <div className={`space-y-3 ${showAllLearning ? 'max-h-32 overflow-y-auto' : ''}`}>
                 {course.whatYouWillLearn.slice(0, showAllLearning ? undefined : 3).map((item, index) => (
@@ -225,7 +225,7 @@ const CourseDetailModal: React.FC<CourseDetailModalProps> = ({
                     onClick={() => setShowAllLearning(!showAllLearning)}
                     className="text-sm text-orange-600 hover:text-orange-700 font-medium ml-8 transition-colors"
                   >
-                    {showAllLearning ? 'Thu gọn' : `+${course.whatYouWillLearn.length - 3} mục khác...`}
+                    {showAllLearning ? 'Show less' : `+${course.whatYouWillLearn.length - 3} more items...`}
                   </button>
                 )}
               </div>
@@ -237,7 +237,7 @@ const CourseDetailModal: React.FC<CourseDetailModalProps> = ({
                   <div className="text-2xl lg:text-3xl font-bold text-orange-600 mb-1">
                     {formatPrice(course.price)}
                   </div>
-                  <p className="text-sm text-gray-500">Học mãi mãi</p>
+                  <p className="text-sm text-gray-500">Lifetime access</p>
                 </div>
                 <div className="flex gap-3 w-full sm:w-auto justify-center items-center">
                   <Button 
@@ -256,7 +256,7 @@ const CourseDetailModal: React.FC<CourseDetailModalProps> = ({
                     onClick={handleAddToCart}
                   >
                     <DollarSign className="w-4 h-4 mr-2" />
-                    Thêm vào giỏ
+                    Add to cart
                   </Button>
                 </div>
               </div>
