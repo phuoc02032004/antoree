@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { Heart } from 'lucide-react';
-import chevronRight from '@/assets/icons/chevron-right-black.svg';
+import React, { useState, useCallback, useMemo } from 'react';
+import { Heart, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
 import { type Course } from '@/types/Course';
@@ -8,6 +7,8 @@ import { type Category } from '@/types/Category';
 import CourseDetailModal from '@/components/Course/CourseDetailModal';
 import { useFavorites } from '@/hooks/useFavorites';
 import CourseListLoading from '@/components/Course/CourseListLoading';
+import { toast } from 'sonner';
+import { cn } from '@/lib/utils'; 
 
 interface CourseListProps {
   courses: Course[];
@@ -32,15 +33,46 @@ const CourseList: React.FC<CourseListProps> = ({
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const { isFavorite, toggleFavorite } = useFavorites();
 
-  const handleReadMoreClick = (course: Course) => {
+  const handleReadMoreClick = useCallback((course: Course) => {
     setSelectedCourse(course);
     setIsModalOpen(true);
-  };
+  }, []);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setIsModalOpen(false);
     setSelectedCourse(null);
-  };
+  }, []);
+
+  const paginationItems = useMemo(() => {
+    const pages = [];
+    const pageLimit = 2; 
+    const showEllipsis = totalPages > 5;
+
+    if (!showEllipsis) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      pages.push(1);
+      if (currentPage > pageLimit + 1) {
+        pages.push('...');
+      }
+
+      const start = Math.max(2, currentPage - 1);
+      const end = Math.min(totalPages - 1, currentPage + 1);
+
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+
+      if (currentPage < totalPages - pageLimit) {
+        pages.push('...');
+      }
+      pages.push(totalPages);
+    }
+    return pages;
+  }, [currentPage, totalPages]);
+
 
   if (isLoading) {
     return <CourseListLoading />;
@@ -48,56 +80,60 @@ const CourseList: React.FC<CourseListProps> = ({
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {courses.map((course) => (
           <Card
             key={course.id}
-            className="group flex flex-col overflow-hidden rounded-2xl border-transparent bg-white shadow-sm
-              transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-2xl cursor-pointer"
+            onClick={() => handleReadMoreClick(course)}
+            className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-xl border
+             border-slate-200 bg-white shadow-md transition-all duration-300 hover:border-orange-400 hover:shadow-xl hover:-translate-y-1"
           >
             <div className="relative">
               <img
                 src={course.thumbnailUrl}
                 alt={course.title}
-                className="h-56 w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                className="h-52 w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <Button
-                variant="outline"
+                variant="ghost"
                 size="icon"
-                className="absolute top-3 right-3 bg-white/80 rounded-full text-red-500 hover:bg-white hover:text-red-600"
+                className="absolute top-3 right-3 h-9 w-9 rounded-full bg-white/50 text-orange-600
+                 backdrop-blur-sm transition-colors hover:bg-white hover:text-red-500"
                 onClick={(e) => {
                   e.stopPropagation();
+                  const isCurrentlyFavorite = isFavorite(course.id);
                   toggleFavorite(course.id);
+                  if (isCurrentlyFavorite) {
+                    toast.success(`Removed '${course.title}' from favorites!`);
+                  } else {
+                    toast.success(`Added '${course.title}' to favorites!`);
+                  }
                 }}
               >
-                <Heart className={`w-5 h-5 ${isFavorite(course.id) ? 'fill-current text-red-600' : 'text-red-500'}`} />
+                <Heart className={cn('h-5 w-5', isFavorite(course.id) && 'fill-red-500 text-red-500')} />
               </Button>
             </div>
-            <div onClick={() => handleReadMoreClick(course)} className="flex flex-col flex-grow">
-              <CardContent className="flex flex-grow flex-col p-6">
-                <div className="mb-4 flex items-center gap-4">
-                  <span className="rounded-full bg-[#FFEAE3] px-3 py-1 text-xs font-bold text-[#E5593F]">
-                    {categories.find(cat => cat.id === course.category)?.name}
+            <div className="flex flex-1 flex-col p-5">
+              <CardContent className="flex flex-1 flex-col p-0">
+                <div className="mb-3">
+                  <span className="rounded-md bg-orange-100 px-2.5 py-1 text-xs font-semibold text-orange-800">
+                    {categories.find(cat => cat.id === course.category)?.name || 'Uncategorized'}
                   </span>
                 </div>
-                <CardTitle className="font-sora text-xl font-bold text-gray-800 transition-colors duration-300 group-hover:text-[#E5593F]">
+                <CardTitle className="font-sora text-lg font-bold text-slate-800 transition-colors group-hover:text-orange-600">
                   {course.title}
                 </CardTitle>
-                <p className="font-inter mt-3 flex-grow text-base text-gray-500">
+                <p className="font-inter mt-2 text-sm text-slate-600 line-clamp-3 flex-grow min-h-[4.5rem]">
                   {course.description}
                 </p>
-                <p className="font-sora mt-2 text-lg font-bold text-gray-900">
+              </CardContent>
+              <CardFooter className="mt-auto w-full items-center justify-between p-0 pt-4">
+                <p className="font-sora text-xl font-bold text-slate-900">
                   {formatPrice(course.price)}
                 </p>
-              </CardContent>
-              <CardFooter className="p-6 pt-2">
-                <div className="flex items-center text-base font-semibold text-[#FF6347] transition-colors duration-300 group-hover:text-[#E5593F]">
-                  Read more
-                  <img
-                    src={chevronRight}
-                    alt="arrow"
-                    className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                  />
+                <div className="flex items-center text-sm font-semibold text-orange-600">
+                  View Details
+                  <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </div>
               </CardFooter>
             </div>
@@ -107,33 +143,47 @@ const CourseList: React.FC<CourseListProps> = ({
 
       {totalPages > 1 && (
         <div className="mt-16 flex justify-center">
-          <nav className="flex items-center space-x-2">
+          <nav className="flex items-center space-x-2" aria-label="Pagination">
             <Button
+              variant="outline"
+              size="icon"
               onClick={() => onPageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className="rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+              className="h-9 w-9"
             >
-              Previous
+              <span className="sr-only">Previous</span>
+              <ChevronLeft className="h-4 w-4" />
             </Button>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-              <Button
-                key={page}
-                onClick={() => onPageChange(page)}
-                className={`rounded-md px-4 py-2 text-sm font-medium ${
-                  currentPage === page
-                    ? 'bg-[#FF6347] text-white'
-                    : 'bg-white text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                {page}
-              </Button>
-            ))}
+            {paginationItems.map((page, index) =>
+              typeof page === 'number' ? (
+                <Button
+                  key={`${page}-${index}`}
+                  onClick={() => onPageChange(page)}
+                  className={cn(
+                    'h-9 w-9',
+                    currentPage === page
+                      ? 'bg-orange-600 text-white hover:bg-orange-700'
+                      : 'bg-white text-gray-700 hover:bg-gray-100'
+                  )}
+                  variant={currentPage === page ? 'default' : 'outline'}
+                >
+                  {page}
+                </Button>
+              ) : (
+                <span key={`ellipsis-${index}`} className="px-2 text-gray-500">
+                  ...
+                </span>
+              )
+            )}
             <Button
+              variant="outline"
+              size="icon"
               onClick={() => onPageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className="rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+              className="h-9 w-9"
             >
-              Next
+              <span className="sr-only">Next</span>
+              <ChevronRight className="h-4 w-4" />
             </Button>
           </nav>
         </div>

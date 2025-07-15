@@ -79,6 +79,10 @@ export const courses: Course[] = [
       'Analyze data using Pandas and NumPy',
       'Visualize data with Matplotlib',
       'Understand basic machine learning concepts',
+      'Write Python code for data science',
+      'Analyze data using Pandas and NumPy',
+      'Visualize data with Matplotlib',
+      'Understand basic machine learning concepts',
       'Write Python code for data science'
     ],
   },

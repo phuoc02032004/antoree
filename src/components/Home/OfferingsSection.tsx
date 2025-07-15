@@ -1,4 +1,6 @@
 import React from 'react';
+import { Button } from '../ui/button';
+import { useNavigate } from 'react-router-dom';
 
 const ArrowIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
@@ -29,6 +31,7 @@ const offeringsData = [
 ];
 
 const OfferingsSection: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <section className="bg-gray-50 py-20 md:py-28">
       <div className="relative mx-auto px-4 sm:px-6 lg:px-24">
@@ -61,13 +64,13 @@ const OfferingsSection: React.FC = () => {
         </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="#" className="w-full sm:w-auto text-center bg-[#FF6347] text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-[#E5593F] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF6347]">
+          <Button onClick={()=> navigate('/courses')} className="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
             Explore Courses
-          </a>
-          <a href="#" className="group w-full sm:w-auto flex items-center justify-center gap-2 font-semibold text-gray-800 hover:text-[#FF6347] py-3 px-6 transition-colors duration-200">
+          </Button>
+          <Button className="group w-full sm:w-auto flex items-center justify-center gap-2 font-semibold text-gray-800 hover:text-[#FF6347] py-3 px-6 transition-colors duration-200">
             Learn More
             <ArrowIcon className="transition-transform duration-200 group-hover:translate-x-1" />
-          </a>
+          </Button>
         </div>
       </div>
     </section>

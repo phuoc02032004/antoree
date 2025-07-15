@@ -1,9 +1,11 @@
 import React from 'react';
 import { Button } from '../ui/button';
+import { useNavigate } from 'react-router-dom';
 
 const imageUrl = 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop';
 
 const CtaSection: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 w-full">
       <div className="container mx-auto">
@@ -23,7 +25,8 @@ const CtaSection: React.FC = () => {
               </p>
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                 <Button
-                  className="transform rounded-md bg-orange-600 px-8 py-3 font-semibold text-white shadow-md transition-all duration-300 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-orange-700 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-orange-300"
+                onClick={()=>navigate('/courses')}
+                  className="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 >
                   Explore Courses
                 </Button>

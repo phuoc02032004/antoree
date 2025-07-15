@@ -4,6 +4,14 @@ module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
+  safelist: [
+    'dark:from-gray-900',
+    'dark:via-gray-800',
+    'dark:to-slate-900',
+    'from-slate-50',
+    'via-white',
+    'to-blue-50',
+  ],
   theme: {
     container: {
       center: true,

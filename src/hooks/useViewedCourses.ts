@@ -9,10 +9,9 @@ export const getViewedCourses = (): string[] => {
 
 export const addCourseToViewed = (courseId: string): void => {
   const viewedCourses = getViewedCourses();
-  if (!viewedCourses.includes(courseId)) {
-    const newViewed = [...viewedCourses, courseId];
-    localStorage.setItem(VIEWED_COURSES_KEY, JSON.stringify(newViewed));
-  }
+  const filteredCourses = viewedCourses.filter(id => id !== courseId);
+  const newViewed = [courseId, ...filteredCourses];
+  localStorage.setItem(VIEWED_COURSES_KEY, JSON.stringify(newViewed));
 };
 
 export const useViewedCourses = () => {

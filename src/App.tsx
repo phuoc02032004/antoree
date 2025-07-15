@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import ScrollToTop from "./utils/ScrollToTop";
 import AppRoutes from "./routes/AppRoutes";
 import './App.css';
+import { Toaster } from "@/components/ui/sonner"
 
 const App: React.FC = () => {
 
@@ -10,6 +11,7 @@ const App: React.FC = () => {
     <BrowserRouter>
           <ScrollToTop />
           <AppRoutes />
+          <Toaster position="top-right" />
     </BrowserRouter>
   );
 }
